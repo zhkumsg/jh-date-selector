@@ -1,0 +1,22 @@
+{
+	"name": "date-selector",
+	"version": "1.0.0",
+	"description": "日期区间选择插件，支持多区间选择",
+	"main": "lib/index.js",
+	"scripts": {
+		"dev": "anywhere -v",
+		"build": "babel ./src --presets babel-preset-es2015 --out-dir ./lib",
+		"mini": "node_modules/uglifyjs/index.js index.js -o index.min.js"
+	},
+	"keywords": [
+		"date",
+		"selector"
+	],
+	"author": "moshenggui@ijunhai.com",
+	"license": "ISC",
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-es2015": "^6.24.1",
+		"uglifyjs": "^2.4.11"
+	}
+}

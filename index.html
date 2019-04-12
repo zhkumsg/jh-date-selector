@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>date-selector</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				width: 100vw;
+				height: 100vh;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		</style>
+		<link rel="stylesheet" href="./lib/index.css" />
+	</head>
+	<body>
+		<div id="box" class="date-selector">
+			<div class="calendars">
+				<div class="calendar-item calendar-right">
+					<div class="top">
+						<span class="goto-btn prev-year">&lt;&lt;</span>
+						<span class="goto-btn prev-month">&lt;</span>
+						<span class="goto-date">2019年05月</span>
+						<span class="goto-btn next-month">&gt;</span>
+						<span class="goto-btn next-year">&gt;&gt;</span>
+					</div>
+					<div class="week">
+						<span>日</span>
+						<span>一</span>
+						<span>二</span>
+						<span>三</span>
+						<span>四</span>
+						<span>五</span>
+						<span>六</span>
+					</div>
+					<div class="days">
+						<div class="day-row">
+							<span>1</span>
+							<span>2</span>
+							<span>3</span>
+							<span>4</span>
+							<span>5</span>
+							<span>6</span>
+							<span>7</span>
+						</div>
+						<div class="day-row">
+							<span>8</span>
+							<span>9</span>
+							<span>10</span>
+							<span>11</span>
+							<span>12</span>
+							<span>13</span>
+							<span>14</span>
+						</div>
+						<div class="day-row">
+							<span>15</span>
+							<span>16</span>
+							<span>17</span>
+							<span>18</span>
+							<span>19</span>
+							<span>20</span>
+							<span>21</span>
+						</div>
+						<div class="day-row">
+							<span>22</span>
+							<span>23</span>
+							<span>24</span>
+							<span>25</span>
+							<span>26</span>
+							<span>27</span>
+							<span>28</span>
+						</div>
+						<div class="day-row">
+							<span>29</span>
+							<span>30</span>
+							<span>31</span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="options"></div>
+		</div>
+		<script src="./src/index.js"></script>
+		<script>
+			new DateSelector({
+				el: document.querySelector('#box'),
+				date: new Date(),
+				max: 5,
+				change({ dates, index }) {
+					// console.log(dates);
+				},
+			});
+		</script>
+	</body>
+</html>

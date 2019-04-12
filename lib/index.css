@@ -1,0 +1,214 @@
+.date-selector {
+	width: 684px;
+	height: 240px;
+	border: 1px solid #f3f3f3;
+	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+	background: #fff;
+	display: flex;
+}
+
+.date-selector > .calendars {
+	flex: 1;
+	height: 100%;
+	border-right: 1px solid #e7e9f0;
+	padding: 20px;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+
+.date-selector > .options {
+	flex: none;
+	width: 220px;
+	height: 100%;
+	padding: 20px 15px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+}
+
+.date-selector > .calendars > .calendar-item {
+	flex: 1;
+}
+
+.date-selector > .calendars > .calendar-left {
+	margin-right: 10px;
+}
+
+.date-selector > .calendars > .calendar-right {
+	margin-left: 10px;
+}
+
+.date-selector > .calendars .top {
+	display: flex;
+	line-height: 19px;
+}
+
+.date-selector > .calendars .goto-btn {
+	flex: none;
+	color: #b0b8bf;
+	font-size: 12px;
+	font-stretch: ultra-condensed;
+	cursor: pointer;
+	margin: 0 8px;
+	user-select: none;
+}
+.date-selector > .calendars .goto-btn:hover {
+	color: #409eff;
+}
+
+.date-selector > .calendars .goto-date {
+	flex: 1;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.date-selector > .calendars .calendar-left .next-month,
+.date-selector > .calendars .calendar-left .next-year {
+	display: none;
+}
+
+.date-selector > .calendars .calendar-left .goto-date {
+	text-align: right;
+	margin-right: 10px;
+}
+
+.date-selector > .calendars .calendar-right .prev-month,
+.date-selector > .calendars .calendar-right .prev-year {
+	display: none;
+}
+
+.date-selector > .calendars .calendar-right .goto-date {
+	text-align: left;
+	margin-left: 10px;
+}
+
+.date-selector > .calendars .week {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 15px 0 8px 0;
+}
+
+.date-selector > .calendars .week > span {
+	flex: 1;
+	text-align: center;
+	color: #adadad;
+	font-size: 12px;
+	cursor: default;
+}
+
+.date-selector > .calendars .day-row {
+	display: flex;
+}
+
+.date-selector > .calendars .day-row > span {
+	flex: 1;
+	text-align: center;
+	font-size: 12px;
+	font-family: Arial;
+	line-height: 20px;
+	color: #303133;
+	cursor: pointer;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+.date-selector > .calendars .day-row > span.null {
+	cursor: default;
+}
+
+.date-selector > .calendars .day-row > span.selected {
+	background: #3bb4f1;
+	opacity: 0.36;
+	color: #fff;
+}
+
+.date-selector > .calendars .day-row > span.highlight {
+	background: #3bb4f1;
+	color: #fff;
+}
+
+.date-selector > .options .dates {
+	flex: 1;
+}
+
+.date-selector > .options .dates .title {
+	color: #6e6e6e;
+	font-size: 12px;
+	padding-bottom: 16px;
+}
+
+.date-selector > .options .dates .date-item {
+	font-size: 12px;
+	color: #000;
+	padding-bottom: 10px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.date-selector > .options .dates .date-item .text {
+	flex: 1;
+	cursor: pointer;
+}
+
+.date-selector > .options .dates .date-item .text.current {
+	color: #3bb4f1;
+}
+
+.date-selector > .options .dates .date-item .btn {
+	flex: none;
+	display: inline-block;
+	margin: 0 2px;
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	line-height: 16px;
+	user-select: none;
+	cursor: pointer;
+}
+
+.date-selector > .options .dates .date-item .btn.add {
+	color: #fff;
+	background: #3bb4f1;
+}
+
+.date-selector > .options .dates .date-item .btn.del {
+	color: #fff;
+	background: #ff4a4a;
+}
+
+.date-selector > .options .dates .date-item .btn.disable {
+	color: #adadad;
+	background: #e8e8e8;
+	cursor: not-allowed;
+}
+
+.date-selector > .options .btns {
+	flex: none;
+	height: 30px;
+	text-align: center;
+}
+
+.date-selector > .options .btns .btn {
+	display: inline-block;
+	width: 54px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid rgba(220, 220, 220, 1);
+	font-size: 12px;
+	font-weight: 400;
+	color: rgba(48, 49, 51, 1);
+	margin: 0 5px;
+	border-radius: 2px;
+	user-select: none;
+	cursor: pointer;
+}
+
+.date-selector > .options .btns .btn.sure {
+	color: #fff;
+	background: #3bb4f1;
+	border-color: #3bb4f1;
+}
