@@ -1,14 +1,25 @@
 (() => {
-	function DateSelector({ el, date, max, change }) {
+	function DateSelector({ el, data, max, change }) {
 		this.el = el;
 		this.index = 0;
-		this.date = date || new Date();
+		this.date = new Date();
 		this._change = change;
 		this.max = Math.abs(Number.parseInt(max, 10) || 1);
 		this.height = max * 30 + 100;
-		if (this.el instanceof HTMLElement && this.date instanceof Date) {
+		if (this.el instanceof HTMLElement) {
 			this.height = this.height > 240 ? this.height : 240;
 			this.selections = Array.from({ length: this.max }, () => []);
+			(data || []).forEach((item, index) => {
+				if (item instanceof Array && item.length === 2) {
+					const from = new Date(item[0]);
+					const to = new Date(item[1]);
+					this.selections[index] = [
+						`${from.getFullYear()}-${from.getMonth() + 1}-${from.getDate()}`,
+						`${to.getFullYear()}-${to.getMonth() + 1}-${to.getDate()}`,
+					];
+					this.date = this.getNextMonth(from);
+				}
+			});
 			this.init();
 		}
 	}
@@ -109,10 +120,15 @@
                     `);
 				}
 			});
+			const liststr =
+				list.length > 0
+					? list.join('')
+					: `<div class="null">暂未选择时间</div>
+            `;
 			return `
 			    <div class="dates">
                     <div class="title">增加对比时间段</div>
-                    ${list.join('')}
+                    ${liststr}
 			    </div>
 			    <div class="btns">
 			    	<span class="btn cancle">取消</span>
@@ -156,6 +172,11 @@
 			dateSpan = Math.abs(dateSpan);
 			iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
 			return iDays;
+		},
+		updateCalendarDate() {
+			if (this.selections[this.index].length > 0) {
+				this.date = new Date(this.getNextMonth(this.selections[this.index][0])); // 日历切换
+			}
 		},
 		listenCalendarEvent() {
 			this.el.querySelector('.calendars').addEventListener('click', event => {
@@ -231,9 +252,7 @@
 		},
 		onDateTextClick(event) {
 			this.index = Number.parseInt(event.target.getAttribute('data-index'), 10);
-			if (this.selections[this.index].length > 0) {
-				this.date = new Date(this.getNextMonth(this.selections[this.index][0])); // 日历切换
-			}
+			this.updateCalendarDate();
 			this.init();
 		},
 		onAddBtnClick(event) {
@@ -249,15 +268,15 @@
 				`${nfrom.getFullYear()}-${nfrom.getMonth() + 1}-${nfrom.getDate()}`,
 				`${nto.getFullYear()}-${nto.getMonth() + 1}-${nto.getDate()}`,
 			];
-			if (this.selections[this.index].length > 0) {
-				this.date = new Date(this.getNextMonth(this.selections[this.index][0])); // 日历切换
-			}
+			this.updateCalendarDate();
 			this.init();
 		},
 		onDelBtnClick(event) {
 			const index = Number.parseInt(event.target.getAttribute('data-index'), 10);
-			this.selections[index] = [];
+			this.selections.splice(index, 1);
+			this.selections.push([]);
 			this.index = index === 0 ? 0 : index - 1;
+			this.updateCalendarDate();
 			this.init();
 		},
 	};
