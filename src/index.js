@@ -1,12 +1,18 @@
 (() => {
-	function DateSelector({ el, data, max, change }) {
-		this.el = el;
+	let self;
+
+	function DateSelector({ target, className, data, max, change, auto }) {
+		self = this;
 		this.index = 0;
+		this.isshow = false;
+		this.target = target;
 		this.date = new Date();
 		this._change = change;
+		this.el = document.createElement('div');
+		this.el.className = `date-selector ${className}`;
 		this.max = Math.abs(Number.parseInt(max, 10) || 1);
 		this.height = max * 30 + 100;
-		if (this.el instanceof HTMLElement) {
+		if (this.target instanceof HTMLElement) {
 			this.height = this.height > 240 ? this.height : 240;
 			this.selections = Array.from({ length: this.max }, () => []);
 			(data || []).forEach((item, index) => {
@@ -21,6 +27,9 @@
 				}
 			});
 			this.init();
+			if (this.auto === true) {
+				this.show();
+			}
 		}
 	}
 
@@ -29,7 +38,7 @@
 			this.el.style.height = `${this.height}px`;
 			this.el.innerHTML = this.render();
 			this.listenCalendarEvent();
-			this.listOptionsEvent();
+			this.listenOptionsEvent();
 		},
 		renderTop(date) {
 			return `
@@ -194,7 +203,7 @@
 				}
 			});
 		},
-		listOptionsEvent() {
+		listenOptionsEvent() {
 			this.el.querySelector('.options').addEventListener('click', event => {
 				const cls = event.target.className;
 				if (cls.includes('text')) {
@@ -204,7 +213,7 @@
 				} else if (cls.includes('del')) {
 					this.onDelBtnClick(event);
 				} else if (cls.includes('cancle')) {
-					console.log('关闭弹窗');
+					this.hide();
 				} else if (cls.includes('sure')) {
 					console.log('关闭弹窗并返回结果');
 				}
@@ -278,6 +287,34 @@
 			this.index = index === 0 ? 0 : index - 1;
 			this.updateCalendarDate();
 			this.init();
+		},
+		onMarkClick({ x, y }) {
+			const elClientRect = self.el.getBoundingClientRect();
+			if (!(x > elClientRect.left && x < elClientRect.right && y > elClientRect.top && y < elClientRect.bottom)) {
+				self.hide();
+			}
+		},
+		removeElement() {
+			const paras = document.getElementsByClassName('date-selector');
+			for (let i = 0; i < paras.length; i++) {
+				if (paras[i] !== null) paras[i].parentNode.removeChild(paras[i]);
+			}
+		},
+		show() {
+			const { left, right, top, bottom, height, width } = this.target.getBoundingClientRect();
+			this.el.style.left = `${left}px`;
+			this.el.style.top = `${top + height}px`;
+			this.removeElement();
+			document.body.append(this.el); // 统一添加到body上
+			setTimeout(() => {
+				document.body.addEventListener('click', this.onMarkClick);
+			});
+			this.isshow = true;
+		},
+		hide() {
+			this.removeElement();
+			this.isshow = false;
+			document.body.removeEventListener('click', this.onMarkClick);
 		},
 	};
 
