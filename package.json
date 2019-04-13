@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "anywhere -v",
 		"build": "babel ./src --presets babel-preset-es2015 --out-dir ./lib",
-		"mini": "node_modules/uglifyjs/index.js index.js -o index.min.js"
+		"mini": "node node_modules/uglifyjs/index.js lib/index.js -o lib/index.min.js"
 	},
 	"keywords": [
 		"date",
