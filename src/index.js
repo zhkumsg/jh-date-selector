@@ -27,7 +27,7 @@
 				}
 			});
 			this.init();
-			if (this.auto === true) {
+			if (auto === true) {
 				this.show();
 			}
 		}
@@ -294,20 +294,25 @@
 				self.hide();
 			}
 		},
+		onBgSCroll() {},
 		removeElement() {
 			const paras = document.getElementsByClassName('date-selector');
 			for (let i = 0; i < paras.length; i++) {
 				if (paras[i] !== null) paras[i].parentNode.removeChild(paras[i]);
 			}
 		},
+		showAt() {
+			const { left, right, top, bottom, height, width } = self.target.getBoundingClientRect();
+			self.el.style.left = `${left}px`;
+			self.el.style.top = `${top + height}px`;
+		},
 		show() {
-			const { left, right, top, bottom, height, width } = this.target.getBoundingClientRect();
-			this.el.style.left = `${left}px`;
-			this.el.style.top = `${top + height}px`;
+			this.showAt();
 			this.removeElement();
 			document.body.append(this.el); // 统一添加到body上
 			setTimeout(() => {
 				document.body.addEventListener('click', this.onMarkClick);
+				console.log(this.onBgSCroll,'再监听滚动时间，实时修改定位位置')
 			});
 			this.isshow = true;
 		},
