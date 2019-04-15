@@ -4,6 +4,8 @@
 
 ![](https://upload-images.jianshu.io/upload_images/13908708-096dcb403f3b7027.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+[在线demo](http://zhkumsg.gitee.io/date-selector/)
+
 ---
 
 ### 使用方式
