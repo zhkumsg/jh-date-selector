@@ -294,7 +294,9 @@
 				self.hide();
 			}
 		},
-		onBgSCroll() {},
+		onBgSCroll() {
+			self.showAt();
+		},
 		removeElement() {
 			const paras = document.getElementsByClassName('date-selector');
 			for (let i = 0; i < paras.length; i++) {
@@ -312,7 +314,7 @@
 			document.body.append(this.el); // 统一添加到body上
 			setTimeout(() => {
 				document.body.addEventListener('click', this.onMarkClick);
-				console.log(this.onBgSCroll,'再监听滚动时间，实时修改定位位置')
+				document.addEventListener('scroll', this.onBgSCroll);
 			});
 			this.isshow = true;
 		},
@@ -320,6 +322,7 @@
 			this.removeElement();
 			this.isshow = false;
 			document.body.removeEventListener('click', this.onMarkClick);
+			document.removeEventListener('scroll', this.onBgSCroll);
 		},
 	};
 

@@ -55,9 +55,11 @@
 	cursor: pointer;
 	margin: 0 8px;
 	user-select: none;
+	transform: scale(1, 1.9);
 }
 .date-selector > .calendars .goto-btn:hover {
 	color: #409eff;
+	font-weight: 700;
 }
 
 .date-selector > .calendars .goto-date {

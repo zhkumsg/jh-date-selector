@@ -2,6 +2,16 @@
 
 > 日期选择组件
 
+![](https://upload-images.jianshu.io/upload_images/13908708-096dcb403f3b7027.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 如何使用
+1. 引入资源
+
+2. 实例化组件
+3. 接收结果
+
+
+
 ### 开发
 
 ```bash
