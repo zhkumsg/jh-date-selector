@@ -1,13 +1,15 @@
 (() => {
 	let self;
 
-	function DateSelector({ target, className, data, max, change, auto }) {
+	function DateSelector({ target, className, data, max, change, auto, confirm, disabledDate }) {
 		self = this;
 		this.index = 0;
 		this.isshow = false;
 		this.target = target;
 		this.date = new Date();
 		this._change = change;
+		this._confirm = confirm;
+		this._disabledDate = disabledDate;
 		this.el = document.createElement('div');
 		this.el.className = `date-selector ${className}`;
 		this.max = Math.abs(Number.parseInt(max, 10) || 1);
@@ -80,6 +82,12 @@
 						} else if (currentTime > firstTime && currentTime < lastTime) {
 							cls.push('selected');
 						}
+						if (this._disabledDate instanceof Function)
+							if (this._disabledDate(new Date(datadate))) {
+								cls.push('notallow');
+							}
+						{
+						}
 					} else {
 						cls.push('null');
 					}
@@ -138,7 +146,8 @@
 			    <div class="dates">
                     <div class="title">增加对比时间段</div>
                     ${liststr}
-			    </div>
+				</div>
+				<div class="tip"></div>
 			    <div class="btns">
 			    	<span class="btn cancle">取消</span>
 			    	<span class="btn sure">确定</span>
@@ -215,7 +224,7 @@
 				} else if (cls.includes('cancle')) {
 					this.hide();
 				} else if (cls.includes('sure')) {
-					console.log('关闭弹窗并返回结果');
+					this.emitConfirm();
 				}
 			});
 		},
@@ -240,7 +249,7 @@
 			this.init();
 		},
 		onDayClick(event) {
-			if (!event.target.className.includes('null')) {
+			if (!event.target.className.includes('null') && !event.target.className.includes('notallow')) {
 				const dstr = event.target.getAttribute('data-date');
 				if (this.selections[this.index].length >= 2) {
 					this.selections[this.index] = [];
@@ -251,12 +260,7 @@
 				});
 				this.el.querySelector('.calendars').innerHTML = this.renderCalendar(this.date); // 重新渲染日历
 				this.el.querySelector('.options').innerHTML = this.renderOptions(); // 重新渲染结果
-				if (this._change instanceof Function) {
-					this._change({
-						dates: JSON.parse(JSON.stringify(this.selections[this.index])),
-						index: this.index,
-					}); // 触发回调
-				}
+				this.emitChange();
 			}
 		},
 		onDateTextClick(event) {
@@ -272,6 +276,15 @@
 			const nto = new Date(from.setDate(from.getDate() - 1));
 			const ntemp = new Date(nto);
 			const nfrom = new Date(ntemp.setDate(ntemp.getDate() - diff));
+			if (this._disabledDate instanceof Function) {
+				if (this._disabledDate(nfrom) || this._disabledDate(nto)) {
+					this.el.querySelector('.options .tip').textContent = '超出时间范围，请重新选择';
+					setTimeout(() => {
+						this.el.querySelector('.options .tip').textContent = '';
+					}, 3000);
+					return false;
+				}
+			}
 			this.index = index + 1;
 			this.selections[this.index] = [
 				`${nfrom.getFullYear()}-${nfrom.getMonth() + 1}-${nfrom.getDate()}`,
@@ -279,6 +292,7 @@
 			];
 			this.updateCalendarDate();
 			this.init();
+			this.emitChange();
 		},
 		onDelBtnClick(event) {
 			const index = Number.parseInt(event.target.getAttribute('data-index'), 10);
@@ -287,6 +301,7 @@
 			this.index = index === 0 ? 0 : index - 1;
 			this.updateCalendarDate();
 			this.init();
+			this.emitChange();
 		},
 		onMarkClick({ x, y }) {
 			const elClientRect = self.el.getBoundingClientRect();
@@ -323,6 +338,39 @@
 			this.isshow = false;
 			document.body.removeEventListener('click', this.onMarkClick);
 			document.removeEventListener('scroll', this.onBgSCroll);
+		},
+		toggle() {
+			if (this.isshow) {
+				this.hide();
+			} else {
+				this.show();
+			}
+		},
+		emitChange() {
+			if (this._change instanceof Function) {
+				const list = [];
+				this.selections.forEach(item => {
+					if (item.length > 0) {
+						list.push([item[0], item[item.length - 1]]);
+					}
+				});
+				this._change({
+					data: list,
+					current: list[this.index],
+					index: this.index,
+				}); // 触发回调
+			}
+		},
+		emitConfirm() {
+			if (this._confirm instanceof Function) {
+				const list = [];
+				this.selections.forEach(item => {
+					if (item.length > 0) {
+						list.push([item[0], item[item.length - 1]]);
+					}
+				});
+				this._confirm(list); // 触发回调
+			}
 		},
 	};
 

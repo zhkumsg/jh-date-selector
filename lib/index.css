@@ -1,5 +1,5 @@
 .date-selector {
-	width: 640px;
+	width: 650px;
 	height: 240px;
 	border: 1px solid #f3f3f3;
 	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
@@ -22,7 +22,7 @@
 
 .date-selector > .options {
 	flex: none;
-	width: 206px;
+	width: 215px;
 	height: 100%;
 	padding: 15px;
 	box-sizing: border-box;
@@ -56,6 +56,7 @@
 	margin: 0 8px;
 	user-select: none;
 	transform: scale(1, 1.9);
+	letter-spacing: -3px;
 }
 .date-selector > .calendars .goto-btn:hover {
 	color: #409eff;
@@ -133,6 +134,13 @@
 	color: #fff;
 }
 
+.date-selector > .calendars .day-row > span.notallow {
+	color: #d0d2da;
+	cursor: not-allowed;
+	border-color: #fafafb;
+	background: #fafafb;
+}
+
 .date-selector > .options .dates {
 	flex: 1;
 }
@@ -193,6 +201,14 @@
 	color: #adadad;
 	background: #e8e8e8;
 	cursor: not-allowed;
+}
+
+.date-selector > .options .tip {
+	flex: none;
+	font-size: 12px;
+	text-align: center;
+	padding-bottom: 8px;
+	color: #f34b60;
 }
 
 .date-selector > .options .btns {

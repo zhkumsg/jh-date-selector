@@ -31,20 +31,22 @@
 		<script>
 			var selector = new DateSelector({
 				target: document.querySelector('#box'),
-				className: 'test',
-				data: [['2019-3-11', '2019-04-20']],
+				className: 'my-class-name',
+				disabledDate(date) {
+					return Date.parse(date) > Date.parse(new Date());
+				},
+				data: [['2019-3-11', '2019-04-15']],
 				max: 5,
-				change({ dates, index }) {
-					// console.log(dates);
+				change({ data, current, index }) {
+					console.log('当前变化', data, current, index);
 				},
 				auto: true,
+				confirm(data) {
+					console.log('确认结果', data);
+				},
 			});
 			document.body.querySelector('#box').addEventListener('click', () => {
-				if (selector.isshow) {
-					selector.hide();
-				} else {
-					selector.show();
-				}
+				selector.toggle();
 			});
 		</script>
 	</body>
