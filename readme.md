@@ -28,9 +28,7 @@
 <script src="http://zhkumsg.gitee.io/date-selector/lib/index.min.js"></script>
 ```
 
-#### webpack环境
-
-1. 实例化插件
+3. 使用插件
 
 ```js
 var selector = new DateSelector({
@@ -39,8 +37,51 @@ var selector = new DateSelector({
 	max: 5,
 	auto: true,
 });
+
+document.body.querySelector('#box').addEventListener('click', () => {
+	this.selector.toggle();
+});
 ```
 
+#### webpack 环境
+
+1. 安装
+
+```bash
+$ npm install jh-date-selector --save
+```
+
+2. 引入资源
+
+```js
+import 'jh-date-selector';
+import 'jh-date-selector/lib/index.css';
+```
+
+3. 使用插件
+
+_以vue为例_
+
+```js
+export default {
+	data() {
+		return {
+			selector: null,
+		};
+	},
+	mounted() {
+		this.selector = new DateSelector({
+			target: document.querySelector('#box'),
+			data: [],
+			max: 5,
+			auto: true,
+		});
+		document.body.querySelector('#box').addEventListener('click', () => {
+			this.selector.toggle();
+		});
+	},
+};
+```
 
 
 ---
