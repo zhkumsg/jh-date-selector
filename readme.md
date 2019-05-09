@@ -1,34 +1,36 @@
 # jh-date-selector
 
-> 日期选择组件
+> Date selection component
 
 ![](https://upload-images.jianshu.io/upload_images/13908708-096dcb403f3b7027.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-[在线 demo](http://zhkumsg.gitee.io/jh-date-selector/)
+[live demo](http://zhkumsg.gitee.io/jh-date-selector/)
 
 ---
 
-### 使用方式
-
-`引入资源`
+## 快速上手
 
 ```html
-<input id="box" type="text" />
+<div id="box">我是一个输入框</div>
 ```
 
-引入 css 文件
+#### 浏览器环境
+
+1. 引入 css 文件
 
 ```html
 <link rel="stylesheet" href="http://zhkumsg.gitee.io/date-selector/lib/index.css" />
 ```
 
-引入 js 文件
+2. 引入 js 文件
 
 ```html
 <script src="http://zhkumsg.gitee.io/date-selector/lib/index.min.js"></script>
 ```
 
-`实例化插件`
+#### webpack环境
+
+1. 实例化插件
 
 ```js
 var selector = new DateSelector({
@@ -39,9 +41,11 @@ var selector = new DateSelector({
 });
 ```
 
+
+
 ---
 
-### 属性介绍
+## 属性介绍
 
 |     属性     |   类型   | 必填 |                      作用                      |
 | :----------: | :------: | :--: | :--------------------------------------------: |
