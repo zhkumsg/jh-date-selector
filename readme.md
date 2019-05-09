@@ -1,4 +1,4 @@
-# date-selector
+# jh-date-selector
 
 > 日期选择组件
 

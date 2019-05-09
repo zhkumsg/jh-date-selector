@@ -1,5 +1,5 @@
 {
-	"name": "date-selector",
+	"name": "jh-date-selector",
 	"version": "1.0.0",
 	"description": "日期区间选择插件，支持多区间选择",
 	"main": "lib/index.min.js",
