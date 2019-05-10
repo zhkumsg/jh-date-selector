@@ -1,8 +1,5 @@
 (() => {
-	let self;
-
 	function DateSelector({ target, className, data, max, change, auto, confirm, disabledDate }) {
-		self = this;
 		this.index = 0;
 		this.isshow = false;
 		this.target = target;
@@ -303,15 +300,6 @@
 			this.init();
 			this.emitChange();
 		},
-		onMarkClick({ x, y }) {
-			const elClientRect = self.el.getBoundingClientRect();
-			if (!(x > elClientRect.left && x < elClientRect.right && y > elClientRect.top && y < elClientRect.bottom)) {
-				self.hide();
-			}
-		},
-		onBgSCroll() {
-			self.showAt();
-		},
 		removeElement() {
 			const paras = document.getElementsByClassName('date-selector');
 			for (let i = 0; i < paras.length; i++) {
@@ -319,25 +307,35 @@
 			}
 		},
 		showAt() {
-			const { left, right, top, bottom, height, width } = self.target.getBoundingClientRect();
-			self.el.style.left = `${left}px`;
-			self.el.style.top = `${top + height}px`;
+			const { left, top, height } = this.target.getBoundingClientRect();
+			this.el.style.left = `${left}px`;
+			this.el.style.top = `${top + height}px`;
 		},
 		show() {
 			this.showAt();
 			this.removeElement();
 			document.body.append(this.el); // 统一添加到body上
+			this.el.__outsideClickEvent__ = e => {
+				if (!this.el.contains(e.target)) {
+					this.hide();
+				}
+			};
+			this.el.__backgroundScrollEvent__ = e => {
+				this.showAt();
+			};
 			setTimeout(() => {
-				document.body.addEventListener('click', this.onMarkClick);
-				document.addEventListener('scroll', this.onBgSCroll);
+				document.body.addEventListener('click', this.el.__outsideClickEvent__);
+				document.addEventListener('scroll', this.el.__backgroundScrollEvent__);
 			});
 			this.isshow = true;
 		},
 		hide() {
 			this.removeElement();
 			this.isshow = false;
-			document.body.removeEventListener('click', this.onMarkClick);
-			document.removeEventListener('scroll', this.onBgSCroll);
+			document.body.removeEventListener('click', this.el.__outsideClickEvent__);
+			document.removeEventListener('scroll', this.el.__backgroundScrollEvent__);
+			delete this.el.__outsideClickEvent__;
+			delete this.el.__backgroundScrollEvent__;
 		},
 		toggle() {
 			if (this.isshow) {
